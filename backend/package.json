@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index",
-    "dev": "nodemon index"
+    "start": "nodemon index"
   },
   "keywords": [],
   "author": "",
@@ -13,6 +12,7 @@
   "type": "module",
   "dependencies": {
     "babel": "^6.23.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1"
   },
   "devDependencies": {
