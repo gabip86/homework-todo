@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 3000
 app.use(cors())
 
 app.get('/', (req, res) => {
-  res.send('Hello world!')
+  res.send('My Homework Todo App')
 })
 
 app.listen(PORT, () => {
