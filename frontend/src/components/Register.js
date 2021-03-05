@@ -3,7 +3,7 @@ import { Container, Form, Button, Row, Col } from 'react-bootstrap'
 
 function Register() {
   return (
-    <Container>
+    <Container className="w-50 mx-auto mt-5">
       <Form>
         <Form.Group as={Row}>
           <Form.Label column sm={2}>Username</Form.Label>

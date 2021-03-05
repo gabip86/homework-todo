@@ -2,30 +2,17 @@ import './App.css'
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from 'react-router-dom'
 import Register from './components/Register'
+import Header from './components/Header'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 function App() {
   return (
     <div className="App">
       <Router>
-        <h1>My homework Todo App</h1>
-        <div>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/register">Register</Link>
-            </li>
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
-          </ul>
-        </div>
+        <Header />
 
         <Switch>
           <Route exact path="/">
