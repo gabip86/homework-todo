@@ -4,8 +4,9 @@ import {
   Switch,
   Route
 } from 'react-router-dom'
-import Register from './components/Register'
 import Header from './components/Header'
+import Register from './components/Register'
+import Login from './components/Login'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 function App() {
@@ -19,6 +20,9 @@ function App() {
           </Route>
           <Route path="/register">
             <Register />
+          </Route>
+          <Route path="/login">
+            <Login />
           </Route>
         </Switch>
       </Router>
