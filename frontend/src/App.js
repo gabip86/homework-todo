@@ -5,6 +5,8 @@ import {
   Route,
   Link
 } from 'react-router-dom'
+import Register from './components/Register'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 function App() {
   return (
@@ -26,10 +28,10 @@ function App() {
         </div>
 
         <Switch>
-          <Route path="/">
-
+          <Route exact path="/">
           </Route>
           <Route path="/register">
+            <Register />
           </Route>
         </Switch>
       </Router>
