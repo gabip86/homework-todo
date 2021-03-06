@@ -6,11 +6,7 @@ const app = express()
 const PORT = process.env.PORT || 3000
 
 app.use(cors())
-app.use('/test', apiRouter)
-
-// app.get('/', (req, res) => {
-//   res.send('My Homework Todo App')
-// })
+app.use('/', apiRouter)
 
 app.post('/register',)
 
