@@ -10,13 +10,24 @@ const pool = mysql.createPool({
 
 let db = {}
 
-db.all = () => {
+db.getAllUser = () => {
   return new Promise((resolve, reject) => {
     pool.query(`SELECT * FROM user`, (err, results) => {
       if (err) {
         return reject(err)
       }
       return resolve(results)
+    })
+  })
+}
+
+db.addNewUser = (inputs) => {
+  return new Promise((resolve, reject) => {
+    pool.query(`INSERT INTO user (username, password) VALUES (?,?)`, [inputs.username, inputs.password], (err, results) => {
+      if (err) {
+        return reject(err)
+      }
+      return resolve({message: `${inputs.username} has been registered`})
     })
   })
 }
