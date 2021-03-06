@@ -6,7 +6,7 @@ const router = express.Router()
 router.get('/users', async (req, res) => {
   try {
     let results = await db.getAllUser()
-    res.json(results)
+    res.status(200).json(results)
   } catch (e) {
     console.log(e)
     res.status(500)
@@ -24,6 +24,9 @@ router.get('/users/:id', async (req, res) => {
 })
 
 router.post('/register', async (req, res) => {
+  const username = req.body.username
+  req.checkBody('username', 'Name is required').notEmpty();
+
   try {
     const { username, password } = req.body
     const result = await db.addNewUser({ username, password })

@@ -21,6 +21,17 @@ db.getAllUser = () => {
   })
 }
 
+db.getUserById = (id) => {
+  return new Promise((resolve, reject) => {
+    pool.query(`SELECT * FROM user WHERE id = ?`, [id], (err, results) => {
+      if (err) {
+        return reject(err)
+      }
+      return resolve(results[0])
+    })
+  })
+}
+
 db.addNewUser = (inputs) => {
   return new Promise((resolve, reject) => {
     pool.query(`INSERT INTO user (username, password) VALUES (?,?)`, [inputs.username, inputs.password], (err, results) => {
