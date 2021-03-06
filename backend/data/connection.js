@@ -1,11 +1,12 @@
 import mysql from 'mysql'
+import config from '../config'
 
 const pool = mysql.createPool({
   connectionLimit: 12,
-  host: process.env.MYSQL_HOST,
-  user: process.env.MYSQL_USER,
-  password: process.env.MYSQL_PASSWORD,
-  database: process.env.MYSQL_DATABASE
+  host: config.mysql.MYSQL_HOST,
+  user: config.mysql.MYSQL_USER,
+  password: config.mysql.MYSQL_PASSWORD,
+  database: config.mysql.MYSQL_DATABASE
 })
 
 export const db = async (query, values) => {
