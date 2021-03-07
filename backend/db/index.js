@@ -21,6 +21,17 @@ db.getAllUser = () => {
   })
 }
 
+db.getUserByUsername = (username) => {
+  return new Promise((resolve, reject) => {
+    pool.query(`SELECT * FROM user WHERE username = ?`, [username], (err, results) => {
+      if (err) {
+        return reject(err)
+      }
+      return resolve(results[0])
+    })
+  })
+}
+
 db.getUserById = (id) => {
   return new Promise((resolve, reject) => {
     pool.query(`SELECT * FROM user WHERE id = ?`, [id], (err, results) => {
