@@ -41,6 +41,7 @@ router.post('/register',
       res.status(400).json({ errors: errors.array() })
     }
     try {
+      
       const result = await db.addNewUser({ username, password })
       res.status(200).json(result)
     } catch (e) {
