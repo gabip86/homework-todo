@@ -1,5 +1,6 @@
 import express from 'express'
 import { body, validationResult, check } from 'express-validator'
+import bcrypt, { genSalt } from 'bcrypt'
 import { db } from '../db/index.js'
 
 const router = express.Router()
@@ -35,14 +36,15 @@ router.post('/register',
   body('password').isLength({ min: 8 }).withMessage('Password must be at least 8 character.'),
 
   async (req, res) => {
-    const { username, password } = req.body
+    let { username, password } = req.body
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
       res.status(400).json({ errors: errors.array() })
     }
+    const salt = await bcrypt.genSalt(10)
+    const hashedPassword = await bcrypt.hash(password, salt)
     try {
-      
-      const result = await db.addNewUser({ username, password })
+      const result = await db.addNewUser({ username, hashedPassword })
       res.status(200).json(result)
     } catch (e) {
       res.status(500)

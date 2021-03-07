@@ -45,7 +45,7 @@ db.getUserById = (id) => {
 
 db.addNewUser = (inputs) => {
   return new Promise((resolve, reject) => {
-    pool.query(`INSERT INTO user (username, password) VALUES (?,?)`, [inputs.username, inputs.password], (err, results) => {
+    pool.query(`INSERT INTO user (username, password) VALUES (?,?)`, [inputs.username, inputs.hashedPassword], (err, results) => {
       if (err) {
         return reject(err)
       }
