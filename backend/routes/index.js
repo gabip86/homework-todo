@@ -40,14 +40,15 @@ router.post('/register',
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
       res.status(400).json({ errors: errors.array() })
-    }
-    const salt = await bcrypt.genSalt(10)
-    const hashedPassword = await bcrypt.hash(password, salt)
-    try {
-      const result = await db.addNewUser({ username, hashedPassword })
-      res.status(200).json(result)
-    } catch (e) {
-      res.status(500)
+    } else {
+      const salt = await bcrypt.genSalt(10)
+      const hashedPassword = await bcrypt.hash(password, salt)
+      try {
+        const result = await db.addNewUser({ username, hashedPassword })
+        res.status(200).json(result)
+      } catch (e) {
+        res.status(500)
+      }
     }
   })
 
