@@ -1,6 +1,6 @@
 import express from 'express'
 import { body, validationResult, check } from 'express-validator'
-import bcrypt, { genSalt } from 'bcrypt'
+import bcrypt from 'bcrypt'
 import { db } from '../db/index.js'
 
 const router = express.Router()
@@ -10,7 +10,6 @@ router.get('/users', async (req, res) => {
     let results = await db.getAllUser()
     res.status(200).json(results)
   } catch (e) {
-    console.log(e)
     res.status(500)
   }
 })
@@ -20,7 +19,6 @@ router.get('/users/:id', async (req, res) => {
     let results = await db.getUserById(req.params.id)
     res.json(results)
   } catch (e) {
-    console.log(e)
     res.status(500)
   }
 })
@@ -51,5 +49,8 @@ router.post('/register',
       }
     }
   })
+
+router.post('/login',
+)
 
 export { router }
