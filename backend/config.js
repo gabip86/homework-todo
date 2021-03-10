@@ -5,6 +5,6 @@ export default {
       password: process.env.MYSQL_PASSWORD,
       database: process.env.MYSQL_DATABASE,
     },
-    secret: process.env.SECRET,
+    secret: process.env.ACCESS_TOKEN_SECRET,
   };
   

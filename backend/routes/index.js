@@ -1,11 +1,15 @@
 import express from 'express'
 import { body, validationResult, check } from 'express-validator'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+import { } from 'dotenv'
 import { db } from '../db/index.js'
+import config from '../config.js'
+import authenticateToken from '../middleware/auth.js'
 
 const router = express.Router()
 
-router.get('/users', async (req, res) => {
+router.get('/users', authenticateToken, async (req, res) => {
   try {
     let results = await db.getAllUser()
     res.status(200).json(results)
@@ -14,7 +18,7 @@ router.get('/users', async (req, res) => {
   }
 })
 
-router.get('/users/:id', async (req, res) => {
+router.get('/users/:id', authenticateToken, async (req, res) => {
   try {
     let results = await db.getUserById(req.params.id)
     res.json(results)
@@ -52,16 +56,18 @@ router.post('/register',
   })
 
 router.post('/login', async (req, res) => {
-  const user = await db.getUserByUsername(req.body.username)
-  console.log(user)
+  const { username, password } = req.body
+  const user = await db.getUserByUsername(username)
   if (!user) {
-    return res.status(400).send('Cannot find user')
+    return res.status(400).send({ message: 'Cannot find this user' })
   }
   try {
-    if (await bcrypt.compare(req.body.password, user.password)) {
-      res.send('Success')
+    if (await bcrypt.compare(password, user.password)) {
+      const accessToken = jwt.sign({ username: username }, 'config.secret')
+      res.json({ accessToken: accessToken })
+      res.redirect('/')
     } else {
-      res.send('Not Allowed')
+      res.send({ message: 'Password is incorrect' })
     }
   } catch {
     res.status(500).send()
