@@ -8,13 +8,13 @@ function Login() {
         <Form.Group as={Row}>
           <Form.Label column sm={2}>Username</Form.Label>
           <Col sm={10}>
-            <Form.Control type="text" placeholder="Username"></Form.Control>
+            <Form.Control type="text" placeholder="Username" name="username"></Form.Control>
           </Col>
         </Form.Group>
         <Form.Group as={Row}>
           <Form.Label column sm={2}>Password</Form.Label>
           <Col sm={10}>
-            <Form.Control tpye="password" placeholder="Password"></Form.Control>
+            <Form.Control tpye="password" placeholder="Password" name="password"></Form.Control>
           </Col>
         </Form.Group>
         <Button variant="primary" type="submit">
