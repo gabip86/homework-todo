@@ -39,18 +39,33 @@ router.post('/register',
     if (!errors.isEmpty()) {
       res.status(400).json({ errors: errors.array() })
     } else {
-      const salt = await bcrypt.genSalt(10)
-      const hashedPassword = await bcrypt.hash(password, salt)
+      const hashedPassword = await bcrypt.hash(password, 10)
       try {
         const result = await db.addNewUser({ username, hashedPassword })
         res.status(200).json(result)
-      } catch (e) {
-        res.status(500)
+        res.redirect('/login')
+      } catch {
+        res.status(500).send()
+        res.redirect('/register')
       }
     }
   })
 
-router.post('/login',
-)
+router.post('/login', async (req, res) => {
+  const user = await db.getUserByUsername(req.body.username)
+  console.log(user)
+  if (!user) {
+    return res.status(400).send('Cannot find user')
+  }
+  try {
+    if (await bcrypt.compare(req.body.password, user.password)) {
+      res.send('Success')
+    } else {
+      res.send('Not Allowed')
+    }
+  } catch {
+    res.status(500).send()
+  }
+})
 
 export { router }
