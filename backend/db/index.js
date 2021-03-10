@@ -1,11 +1,12 @@
 import mysql from 'mysql2'
+import config from '../config.js'
 
 const pool = mysql.createPool({
   connectionLimit: 10,
-  host: 'localhost',
-  user: 'root',
-  password: '123456',
-  database: 'todo_app'
+  host: config.mysql.host,
+  user: config.mysql.user,
+  password: config.mysql.password,
+  database: config.mysql.database,
 })
 
 let db = {}

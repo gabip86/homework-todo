@@ -2,9 +2,9 @@ import express from 'express'
 import { body, validationResult, check } from 'express-validator'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import { } from 'dotenv'
 import { db } from '../db/index.js'
 import authenticateToken from '../middleware/auth.js'
+import config from '../config.js'
 
 const router = express.Router()
 
@@ -62,7 +62,7 @@ router.post('/login', async (req, res) => {
   }
   try {
     if (await bcrypt.compare(password, user.password)) {
-      const accessToken = jwt.sign({ username: username }, 'config.secret')
+      const accessToken = jwt.sign({ username: username }, config.secret, { expiresIn: '1h' })
       res.json({ accessToken: accessToken })
       res.redirect('/')
     } else {
