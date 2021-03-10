@@ -4,7 +4,6 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { } from 'dotenv'
 import { db } from '../db/index.js'
-import config from '../config.js'
 import authenticateToken from '../middleware/auth.js'
 
 const router = express.Router()
