@@ -34,8 +34,6 @@ function Register() {
         history.push('/login')
       })
       .catch(err => console.error(err))
-
-    // setState({ username: '', password: '' })
   }
 
   return (

@@ -36,10 +36,9 @@ const MainTodo = () => {
         <FormTodo addTodo={addTodo} />
         <div>
           {todos.map((todo, index) => (
-            <Card>
+            <Card key={index}>
               <Card.Body>
                 <Todo
-                  key={index}
                   index={index}
                   todo={todo}
                   markTodo={markTodo}

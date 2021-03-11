@@ -46,10 +46,8 @@ router.post('/register',
       try {
         const result = await db.addNewUser({ username, hashedPassword })
         res.status(200).json(result)
-        // res.redirect('/login')
       } catch {
         res.status(500).send()
-        // res.redirect('/register')
       }
     }
   })
