@@ -9,6 +9,7 @@ const Login = () => {
     password: ''
   })
   const [validated, setValidated] = useState(false)
+  const [error, setError] = useState('')
   const history = useHistory()
 
   const username = inputs.username
@@ -21,10 +22,10 @@ const Login = () => {
   const handleSubmit = e => {
     const form = e.currentTarget
     if (form.checkValidity() === false) {
-      e.preventDefault()
       e.stopPropagation()
     }
-
+    
+    e.preventDefault()
     setValidated(true)
 
     const userObject = JSON.stringify({

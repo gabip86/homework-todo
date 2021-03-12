@@ -9,6 +9,7 @@ function Register() {
     password: ''
   })
   const [validated, setValidated] = useState(false)
+  const [error, setError] = useState('')
   const history = useHistory()
 
   const username = inputs.username
@@ -21,10 +22,10 @@ function Register() {
   const handleSubmit = e => {
     const form = e.currentTarget
     if (form.checkValidity() === false) {
-      e.preventDefault()
       e.stopPropagation()
     }
 
+    e.preventDefault()
     setValidated(true)
 
     const userObject = JSON.stringify({
@@ -32,15 +33,24 @@ function Register() {
       password: password,
     })
 
-    axios.post('http://localhost:3000/register', userObject, {
-      headers: {
-        "content-type": "application/json"
-      }
-    })
-      .then(response => {
-        history.push('/login')
+    if (!inputs.username) {
+      setError("Username is required.")
+    } else if (!inputs.password) {
+      setError("Password is required")
+    } else {
+      axios.post('http://localhost:3000/register', userObject, {
+        headers: {
+          "content-type": "application/json"
+        }
       })
-      .catch(err => console.error(err))
+        .then(response => {
+          history.push('/login')
+        })
+        .catch(err => {
+          const {msg} = err.response.data
+          setError(msg)
+        })
+    }
   }
 
   return (
@@ -59,7 +69,7 @@ function Register() {
             />
             <Form.Control.Feedback>Looks Good!</Form.Control.Feedback>
             <Form.Control.Feedback type="invalid">
-              Username is required.
+              {error}
             </Form.Control.Feedback>
           </Col>
         </Form.Group>
@@ -77,7 +87,7 @@ function Register() {
             />
             <Form.Control.Feedback>Looks Good!</Form.Control.Feedback>
             <Form.Control.Feedback type="invalid">
-              Password is required and must be min 8 characters long.
+              {error}
             </Form.Control.Feedback>
             <Form.Text id="passwordHelpInline" muted>
               Must be min 8 characters long.

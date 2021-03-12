@@ -40,7 +40,7 @@ router.post('/register',
     let { username, password } = req.body
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-      res.status(400).json({ errors: errors.array() })
+      res.status(400).json({ message: errors.array()[0].msg })
     } else {
       const hashedPassword = await bcrypt.hash(password, 10)
       try {
