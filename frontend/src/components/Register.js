@@ -8,6 +8,7 @@ function Register() {
     username: '',
     password: ''
   })
+  const [validated, setValidated] = useState(false)
   const history = useHistory()
 
   const username = inputs.username
@@ -18,7 +19,13 @@ function Register() {
   }
 
   const handleSubmit = e => {
-    e.preventDefault()
+    const form = e.currentTarget
+    if (form.checkValidity() === false) {
+      e.preventDefault()
+      e.stopPropagation()
+    }
+
+    setValidated(true)
 
     const userObject = JSON.stringify({
       username: username,
@@ -37,9 +44,9 @@ function Register() {
   }
 
   return (
-    <Container className="w-50 mx-auto mt-5">
-      <Form onSubmit={handleSubmit}>
-        <Form.Group as={Row}>
+    <Container className="w-50 mx-auto mt-5 needs-validation">
+      <Form noValidate validated={validated} onSubmit={handleSubmit}>
+        <Form.Group as={Row} controlId="validationCustom01">
           <Form.Label column sm={2}>Username</Form.Label>
           <Col sm={10}>
             <Form.Control
@@ -47,11 +54,16 @@ function Register() {
               value={inputs.username}
               onChange={handleInputChange}
               placeholder="Username"
-              name="username">
-            </Form.Control>
+              name="username"
+              required
+            />
+            <Form.Control.Feedback>Looks Good!</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">
+              Username is required.
+            </Form.Control.Feedback>
           </Col>
         </Form.Group>
-        <Form.Group as={Row}>
+        <Form.Group as={Row} controlId="validationCustom02">
           <Form.Label column sm={2}>Password</Form.Label>
           <Col sm={10}>
             <Form.Control
@@ -59,8 +71,17 @@ function Register() {
               value={inputs.password}
               onChange={handleInputChange}
               placeholder="Password"
-              name="password">
-            </Form.Control>
+              name="password"
+              minLength="8"
+              required
+            />
+            <Form.Control.Feedback>Looks Good!</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">
+              Password is required and must be min 8 characters long.
+            </Form.Control.Feedback>
+            <Form.Text id="passwordHelpInline" muted>
+              Must be min 8 characters long.
+            </Form.Text>
           </Col>
         </Form.Group>
         <Button variant="primary" type="submit">

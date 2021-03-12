@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 import { Container, Form, Button, Row, Col } from 'react-bootstrap'
 import axios from 'axios'
 
-function Login() {
+const Login = () => {
   const [inputs, setInputs] = useState({
     username: '',
     password: ''
