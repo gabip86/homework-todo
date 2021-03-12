@@ -8,6 +8,7 @@ const Login = () => {
     username: '',
     password: ''
   })
+  const [validated, setValidated] = useState(false)
   const history = useHistory()
 
   const username = inputs.username
@@ -18,7 +19,13 @@ const Login = () => {
   }
 
   const handleSubmit = e => {
-    e.preventDefault()
+    const form = e.currentTarget
+    if (form.checkValidity() === false) {
+      e.preventDefault()
+      e.stopPropagation()
+    }
+
+    setValidated(true)
 
     const userObject = JSON.stringify({
       username: username,
@@ -41,8 +48,8 @@ const Login = () => {
   }
   return (
     <Container className="w-50 mx-auto mt-5">
-      <Form onSubmit={handleSubmit}>
-        <Form.Group as={Row}>
+      <Form noValidate validated={validated} onSubmit={handleSubmit}>
+        <Form.Group as={Row} controlId="validationCustom01">
           <Form.Label column sm={2}>Username</Form.Label>
           <Col sm={10}>
             <Form.Control
@@ -50,10 +57,16 @@ const Login = () => {
               value={inputs.username}
               onChange={handleInputChange}
               placeholder="Username"
-              name="username"></Form.Control>
+              name="username"
+              required
+            />
+            {/* <Form.Control.Feedback>Looks Good!</Form.Control.Feedback> */}
+            <Form.Control.Feedback type="invalid">
+              Username is required.
+            </Form.Control.Feedback>
           </Col>
         </Form.Group>
-        <Form.Group as={Row}>
+        <Form.Group as={Row} controlId="validationCustom02">
           <Form.Label column sm={2}>Password</Form.Label>
           <Col sm={10}>
             <Form.Control
@@ -61,7 +74,13 @@ const Login = () => {
               value={inputs.password}
               onChange={handleInputChange}
               placeholder="Password"
-              name="password"></Form.Control>
+              name="password"
+              required
+            />
+            {/* <Form.Control.Feedback>Looks Good!</Form.Control.Feedback> */}
+            <Form.Control.Feedback type="invalid">
+              Password is required.
+            </Form.Control.Feedback>
           </Col>
         </Form.Group>
         <Button variant="primary" type="submit">
