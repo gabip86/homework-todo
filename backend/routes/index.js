@@ -62,7 +62,6 @@ router.post('/login', async (req, res) => {
     if (await bcrypt.compare(password, user.password)) {
       const accessToken = jwt.sign({ username: username }, config.secret, { expiresIn: '1h' })
       res.json({ accessToken: accessToken })
-      res.redirect('/')
     } else {
       res.send({ message: 'Password is incorrect' })
     }
