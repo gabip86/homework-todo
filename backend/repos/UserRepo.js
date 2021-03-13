@@ -3,6 +3,11 @@ export class UserRepo {
     this.db = db
   }
 
+  async userExists(username) {
+    const user = this.db.query(`SELECT * FROM user WHERE username = ?`, [username])
+    return user ? true : false
+  }
+
   async getUserByUsername(username) {
     return new Promise((resolve, reject) => {
       this.db.query(`SELECT * FROM user WHERE username = ?`, [username], (err, results) => {

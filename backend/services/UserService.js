@@ -6,6 +6,7 @@ export class UserService {
     this.getAllUser = this.getAllUser.bind(this)
     this.hashPassword = this.hashPassword.bind(this)
     this.addNewUser = this.addNewUser.bind(this)
+    this.userExists = this.userExists.bind(this)
   }
 
   async getAllUser() {
@@ -22,5 +23,9 @@ export class UserService {
 
   async getUserByUsername(username) {
     return this.userRepo.getUserByUsername(username)
+  }
+
+  async userExists(username) {
+    return this.userRepo.userExists(username)
   }
 }

@@ -1,4 +1,4 @@
-import { validationResult } from 'express-validator'
+import { validateRegisterByInputs } from '../services/ValidatorService.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import config from '../config.js'
@@ -33,17 +33,16 @@ export class UserController {
 
   async register(req, res) {
     let { username, password } = req.body
-    const errors = validationResult(req)
-    if (!errors.isEmpty()) {
-      res.status(400).json({ message: errors.array()[0].msg })
-    } else {
-      const hashedPassword = await this.userService.hashPassword(password)
-      try {
-        const result = await this.userService.addNewUser({ username, hashedPassword })
-        res.status(200).json(result)
-      } catch {
-        res.status(500).send()
+    const hashedPassword = await this.userService.hashPassword(password)
+    try {
+      validateRegisterByInputs({ username, password })
+      if (await this.userService.userExists(username)) {
+        throw Error("User is already taken.")
       }
+      const result = await this.userService.addNewUser({ username, hashedPassword })
+      res.status(200).json(result)
+    } catch (e) {
+      res.status(500).json({ message: e.message })
     }
   }
 

@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import config from '../config.js'
 
-export default function authenticateToken(req, res, next) {
+export default function authHandler(req, res, next) {
   const authHeader = req.headers['authorization']
   const accessToken = authHeader && authHeader.split(' ')[1]
   if (!accessToken) {
