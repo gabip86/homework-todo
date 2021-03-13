@@ -19,4 +19,8 @@ export class UserService {
   async addNewUser(inputs) {
     return this.userRepo.addNewUser(inputs)
   }
+
+  async getUserByUsername(username) {
+    return this.userRepo.getUserByUsername(username)
+  }
 }

@@ -1,10 +1,7 @@
 import express from 'express'
 import { body, check } from 'express-validator'
-import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
 import { mysqlConnection } from '../db/index.js'
 import authenticateToken from '../middleware/auth.js'
-import config from '../config.js'
 import { userController } from '../dependencies/dependencyInjections.js'
 
 const router = express.Router()
@@ -32,23 +29,7 @@ router.post('/register',
   userController.register
   )
 
-router.post('/login', async (req, res) => {
-  const { username, password } = req.body
-  const user = await mysqlConnection.getUserByUsername(username)
-  if (!user) {
-    return res.status(400).send({ message: 'Cannot find this user' })
-  }
-  try {
-    if (await bcrypt.compare(password, user.password)) {
-      const accessToken = jwt.sign({ username: username }, config.secret, { expiresIn: '1h' })
-      res.json({ accessToken: accessToken })
-    } else {
-      res.send({ message: 'Password is incorrect' })
-    }
-  } catch {
-    res.status(500).send()
-  }
-})
+router.post('/login', userController.login)
 
 router.get('/todos', authenticateToken, async (req, res) => {
   try {

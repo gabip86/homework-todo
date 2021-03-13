@@ -1,19 +1,22 @@
 import { validationResult } from 'express-validator'
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+import config from '../config.js'
 
 export class UserController {
-  constructor(userRepo, userService) {
-    this.userRepo = userRepo
+  constructor(userService) {
     this.userService = userService
     this.getUser = this.getUser.bind(this)
     this.getAllUser = this.getAllUser.bind(this)
     this.register = this.register.bind(this)
+    this.login = this.login.bind(this)
   }
 
   async getUser(req, res) {
     console.log(req)
     try {
       let user = await this.userService.getUserByUsername(req.user)
-      res.status(200).json({user})
+      res.status(200).json({ user })
     } catch {
       res.status(500).send()
     }
@@ -41,6 +44,24 @@ export class UserController {
       } catch {
         res.status(500).send()
       }
+    }
+  }
+
+  async login(req, res) {
+    const { username, password } = req.body
+    const user = await this.userService.getUserByUsername(username)
+    if (!user) {
+      return res.status(400).send({ message: 'Cannot find this user' })
+    }
+    try {
+      if (await bcrypt.compare(password, user.password)) {
+        const accessToken = jwt.sign({ username: username }, config.secret, { expiresIn: '1h' })
+        res.json({ accessToken: accessToken })
+      } else {
+        res.send({ message: 'Password is incorrect' })
+      }
+    } catch {
+      res.status(500).send()
     }
   }
 }
