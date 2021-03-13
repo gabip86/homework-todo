@@ -24,4 +24,19 @@ export class TodoRepo {
       })
     })
   }
+
+  async getUserIdByUsername(username) {
+    return new Promise((resolve, reject) => {
+      this.db.query(`SELECT id FROM user WHERE username = ?`, [username], (err, results) => {
+        if (err) {
+          reject(err)
+        }
+        if (results[0]) {
+          resolve(results[0].id)
+        } else {
+          resolve(null)
+        }
+      })
+    })
+  }
 }

@@ -7,6 +7,6 @@ const router = express.Router()
 router.get('/users', authHandler, userController.getAllUser)
 router.post('/register', userController.register)
 router.post('/login', userController.login)
-router.post('/addtodo', todoController.addNewTodo)
+router.post('/addtodo', authHandler, todoController.addNewTodo)
 
 export { router }

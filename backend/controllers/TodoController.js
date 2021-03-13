@@ -9,7 +9,7 @@ export class TodoController {
 
   async getAllTodo(req, res) {
     try {
-      let results = await this.todoService.getAllTodo()
+      const results = await this.todoService.getAllTodo()
       res.status(200).json(results)
     } catch (e) {
       res.status(500)
@@ -17,7 +17,9 @@ export class TodoController {
   }
 
   async addNewTodo(req, res) {
-    let { text, isDone, userId } = req.body
+    const { text, isDone } = req.body
+    const { username } = req.user
+    const userId = await this.todoService.getUserIdByUsername(username)
     try {
       const result = await this.todoService.addNewTodo({ text, isDone, userId })
       res.status(200).json(result)

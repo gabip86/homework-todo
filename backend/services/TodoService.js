@@ -3,6 +3,7 @@ export class TodoService {
     this.todoRepo = todoRepo
     this.getAllTodo = this.getAllTodo.bind(this)
     this.addNewTodo = this.addNewTodo.bind(this)
+    this.getUserIdByUsername = this.getUserIdByUsername.bind(this)
   }
 
   async getAllTodo() {
@@ -11,5 +12,9 @@ export class TodoService {
 
   async addNewTodo(inputs) {
     return this.todoRepo.addNewTodo(inputs)
+  }
+
+  async getUserIdByUsername(username) {
+    return this.todoRepo.getUserIdByUsername(username)
   }
 }
