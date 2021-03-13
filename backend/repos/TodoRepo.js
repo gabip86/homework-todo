@@ -25,6 +25,17 @@ export class TodoRepo {
     })
   }
 
+  async deleteTodoById(id) {
+    return new Promise((resolve, reject) => {
+      this.db.query(`DELETE FROM todos WHERE id = ?`, [id], (err, results) => {
+        if (err) {
+          return reject(err)
+        }
+        return resolve({ message: `Todo has been deleted.` })
+      })
+    })
+  }
+
   async getUserIdByUsername(username) {
     return new Promise((resolve, reject) => {
       this.db.query(`SELECT id FROM user WHERE username = ?`, [username], (err, results) => {
