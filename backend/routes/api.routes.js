@@ -2,20 +2,14 @@ import express from 'express'
 import { body, validationResult, check } from 'express-validator'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import { db } from '../db/index.js'
+import { mysqlConnection } from '../db/index.js'
 import authenticateToken from '../middleware/auth.js'
 import config from '../config.js'
+import { userController } from '../dependencies/dependencyInjections.js'
 
 const router = express.Router()
 
-router.get('/users', authenticateToken, async (req, res) => {
-  try {
-    let results = await db.getAllUser()
-    res.status(200).json(results)
-  } catch (e) {
-    res.status(500)
-  }
-})
+router.get('/users', authenticateToken, userController.getAllUser)
 
 router.get('/users/:id', authenticateToken, async (req, res) => {
   try {
@@ -67,6 +61,15 @@ router.post('/login', async (req, res) => {
     }
   } catch {
     res.status(500).send()
+  }
+})
+
+router.get('/todos', authenticateToken, async (req, res) => {
+  try {
+    let results = await db.getAllUser()
+    res.status(200).json(results)
+  } catch (e) {
+    res.status(500)
   }
 })
 
