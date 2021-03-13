@@ -1,5 +1,5 @@
 import express from 'express'
-import { body, validationResult, check } from 'express-validator'
+import { body, check } from 'express-validator'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { mysqlConnection } from '../db/index.js'
@@ -13,7 +13,7 @@ router.get('/users', authenticateToken, userController.getAllUser)
 
 router.get('/users/:id', authenticateToken, async (req, res) => {
   try {
-    let results = await db.getUserById(req.params.id)
+    let results = await mysqlConnection.getUserById(req.params.id)
     res.json(results)
   } catch (e) {
     res.status(500)
@@ -22,33 +22,19 @@ router.get('/users/:id', authenticateToken, async (req, res) => {
 
 router.post('/register',
   body('username').notEmpty().withMessage('Username is required.'),
-  check('username').custom(async value => {
-    const user = await db.getUserByUsername(value)
-    if (user) {
-      return Promise.reject('Username already exists.')
-    }
-  }),
+  // check('username').custom(() => {
+  //   const user = userController.getUser()
+  //   if (user) {
+  //     return Promise.reject('Username already exists.')
+  //   }
+  // }),
   body('password').isLength({ min: 8 }).withMessage('Password must be at least 8 character.'),
-
-  async (req, res) => {
-    let { username, password } = req.body
-    const errors = validationResult(req)
-    if (!errors.isEmpty()) {
-      res.status(400).json({ message: errors.array()[0].msg })
-    } else {
-      const hashedPassword = await bcrypt.hash(password, 10)
-      try {
-        const result = await db.addNewUser({ username, hashedPassword })
-        res.status(200).json(result)
-      } catch {
-        res.status(500).send()
-      }
-    }
-  })
+  userController.register
+  )
 
 router.post('/login', async (req, res) => {
   const { username, password } = req.body
-  const user = await db.getUserByUsername(username)
+  const user = await mysqlConnection.getUserByUsername(username)
   if (!user) {
     return res.status(400).send({ message: 'Cannot find this user' })
   }
@@ -66,7 +52,7 @@ router.post('/login', async (req, res) => {
 
 router.get('/todos', authenticateToken, async (req, res) => {
   try {
-    let results = await db.getAllUser()
+    let results = await mysqlConnection.getAllUser()
     res.status(200).json(results)
   } catch (e) {
     res.status(500)

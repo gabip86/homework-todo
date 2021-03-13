@@ -3,6 +3,17 @@ export class UserRepo {
     this.db = db
   }
 
+  async getUserByUsername(username) {
+    return new Promise((resolve, reject) => {
+      this.db.query(`SELECT * FROM user WHERE username = ?`, [username], (err, results) => {
+        if (err) {
+          return reject(err)
+        }
+        return resolve(results[0])
+      })
+    })
+  }
+
   async getAllUser() {
     return new Promise((resolve, reject) => {
       this.db.query(`SELECT * FROM user`, (err, results) => {
@@ -10,6 +21,17 @@ export class UserRepo {
           return reject(err)
         }
         return resolve(results)
+      })
+    })
+  }
+
+  async addNewUser(inputs) {
+    return new Promise((resolve, reject) => {
+      this.db.query(`INSERT INTO user (username, password) VALUES (?,?)`, [inputs.username, inputs.hashedPassword], (err, results) => {
+        if (err) {
+          return reject(err)
+        }
+        return resolve({ message: `${inputs.username} has been registered` })
       })
     })
   }

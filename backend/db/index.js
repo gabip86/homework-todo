@@ -10,7 +10,7 @@ let db = {}
 
 db.getUserByUsername = (username) => {
   return new Promise((resolve, reject) => {
-    pool.query(`SELECT * FROM user WHERE username = ?`, [username], (err, results) => {
+    mysqlConnection.query(`SELECT * FROM user WHERE username = ?`, [username], (err, results) => {
       if (err) {
         return reject(err)
       }
@@ -21,7 +21,7 @@ db.getUserByUsername = (username) => {
 
 db.getUserById = (id) => {
   return new Promise((resolve, reject) => {
-    pool.query(`SELECT * FROM user WHERE id = ?`, [id], (err, results) => {
+    mysqlConnection.query(`SELECT * FROM user WHERE id = ?`, [id], (err, results) => {
       if (err) {
         return reject(err)
       }
@@ -32,7 +32,7 @@ db.getUserById = (id) => {
 
 db.addNewUser = (inputs) => {
   return new Promise((resolve, reject) => {
-    pool.query(`INSERT INTO user (username, password) VALUES (?,?)`, [inputs.username, inputs.hashedPassword], (err, results) => {
+    mysqlConnection.query(`INSERT INTO user (username, password) VALUES (?,?)`, [inputs.username, inputs.hashedPassword], (err, results) => {
       if (err) {
         return reject(err)
       }
