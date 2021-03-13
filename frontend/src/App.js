@@ -13,11 +13,11 @@ import MainTodo from './components/MainTodo'
 
 function App() {
   const [auth, setAuth] = useState({ user: { username: null }, token: localStorage.getItem('accessToken') })
-  
+
   return (
     <div className="app">
-      <Header auth={auth} setAuth={setAuth} />
       <Router>
+        <Header auth={auth} setAuth={setAuth} />
         <Switch>
           <Route exact path="/">
           </Route>
