@@ -4,7 +4,7 @@ export class UserRepo {
   }
 
   async userExists(username) {
-    const user = this.db.query(`SELECT * FROM user WHERE username = ?`, [username])
+    const user = await this.getUserByUsername(username)
     return user ? true : false
   }
 

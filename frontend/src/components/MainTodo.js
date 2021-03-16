@@ -4,13 +4,8 @@ import FormTodo from './FormTodo'
 import Todo from './Todo'
 import { Card } from 'react-bootstrap'
 
-const MainTodo = () => {
-  const [todos, setTodos] = useState([
-    {
-      text: 'This is my first todo',
-      isDone: false
-    }
-  ])
+const MainTodo = ({ auth, setAuth }) => {
+  const [todos, setTodos] = useState([])
 
   const addTodo = text => {
     const newTodos = [...todos, { text }]

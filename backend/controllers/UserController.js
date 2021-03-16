@@ -14,7 +14,6 @@ export class UserController {
   }
 
   async getUser(req, res) {
-    console.log(req)
     try {
       let user = await this.userService.getUserByUsername(req.user)
       res.status(200).json({ user })
@@ -37,7 +36,9 @@ export class UserController {
     const hashedPassword = await this.userService.hashPassword(password)
     try {
       validateRegisterByInputs({ username, password })
-      if (await this.userService.userExists(username)) {
+      const boolean = await this.userService.userExists(username)
+      console.log(boolean)
+      if (boolean) {
         throw Error("User is already taken.")
       }
       const result = await this.userService.addNewUser({ username, hashedPassword })

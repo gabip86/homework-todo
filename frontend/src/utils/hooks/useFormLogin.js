@@ -36,6 +36,10 @@ const useForm = (initialValues) => {
         }
       })
         .then(response => {
+          if (response.status === 200) {
+            const { accessToken } = response.data
+            localStorage.setItem('accessToken', accessToken)
+          }
           history.push('/todos')
         })
         .catch(err => {

@@ -5,6 +5,7 @@ import {
   Switch,
   Route
 } from 'react-router-dom'
+import Main from './components/Main'
 import Header from './components/Header'
 import Register from './components/Register'
 import Login from './components/Login'
@@ -36,6 +37,7 @@ function App() {
         <Header auth={auth} setAuth={setAuth} />
         <Switch>
           <Route exact path="/">
+            <Main />
           </Route>
           <Route path="/register">
             <Register />
@@ -44,7 +46,7 @@ function App() {
             <Login />
           </Route>
           <Route path="/todos">
-            <MainTodo />
+            <MainTodo auth={auth} setAuth={setAuth} />
           </Route>
         </Switch>
       </Router>
