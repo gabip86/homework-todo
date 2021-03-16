@@ -2,15 +2,16 @@ import React from 'react'
 import { useState } from 'react'
 import FormTodo from './FormTodo'
 import Todo from './Todo'
+import addTodo from '../utils/hooks/addTodo'
 import { Card } from 'react-bootstrap'
 
 const MainTodo = ({ auth, setAuth }) => {
   const [todos, setTodos] = useState([])
 
-  const addTodo = text => {
-    const newTodos = [...todos, { text }]
-    setTodos(newTodos)
-  }
+  // const addTodo = text => {
+  //   const newTodos = [...todos, { text }]
+  //   setTodos(newTodos)
+  // }
 
   const markTodo = index => {
     const newTodos = [...todos]

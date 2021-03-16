@@ -11,7 +11,8 @@ export const validateRegisterByInputs = (inputs) => {
     joi.attempt(inputs, schema)
   } catch (e) {
     if (e.message) {
-      if (e.message.includes("required")) {
+      console.log(e.message)
+      if (e.message.includes("empty")) {
         if (e.message.includes("username") && !e.message.includes("password")) {
           throw new HttpError(500, "username is required")
         } else if (e.message.includes("username") && e.message.includes("password")) {
@@ -19,7 +20,7 @@ export const validateRegisterByInputs = (inputs) => {
         } else if (e.message.includes("password")) {
           throw new HttpError(500, "password is required")
         }
-      } else if (e.message.includes("is not allowed to be empty")) {
+      } else if (e.message.includes("length must be")) {
         throw new HttpError(500, "password should be at least 8 characters long")
       }
     }

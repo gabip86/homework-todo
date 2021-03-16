@@ -1,9 +1,9 @@
 import axios from 'axios'
 
-const addTodo = async (type) => {
+const addTodo = async (todo) => {
   try {
-    return axios.post("http://localhost:3000/kingdom/buildings", { type: type.toLowerCase() },
-      { headers: { authorization: "Bearer " + localStorage.getItem("token") } })
+    return axios.post("http://localhost:3000/addtodo", { todo },
+      { headers: { authorization: "Bearer " + localStorage.getItem('accessToken') } })
   } catch (err) {
     const { data } = err.response
     const { message } = data
