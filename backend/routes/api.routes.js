@@ -1,7 +1,6 @@
 import express from 'express'
 import authHandler from '../middleware/auth.js'
 import { userController, todoController } from '../dependencies/dependencyInjections.js'
-import todoHandler from '../middleware/todo.js'
 
 const router = express.Router()
 

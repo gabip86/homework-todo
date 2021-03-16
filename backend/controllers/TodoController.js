@@ -9,12 +9,9 @@ export class TodoController {
 
   async getAllTodo(req, res) {
     try {
-      const username = req.user.username
-      console.log(username)
+      const { username } = req.user
       const userId = await this.userService.getUserIdByUsername(username)
-      console.log(userId)
       const results = await this.todoService.getAllTodoById(userId)
-      console.log(results)
       res.status(200).json(results)
     } catch (e) {
       res.status(500)

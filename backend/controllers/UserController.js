@@ -66,10 +66,10 @@ export class UserController {
   }
 
   async authUser(req, res) {
-    const { username: currentUsername } = req.user
+    const { user: currentUsername } = req
     try {
-      const { id, username } = await this.userService.getDataForAuth(currentUsername)
-      res.status(200).json({ id, username })
+      const user = await this.userService.getDataForAuth(currentUsername)
+      res.status(200).json(user)
     } catch (e) {
       res.status(500).json({ message: e.message })
     }

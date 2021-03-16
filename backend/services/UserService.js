@@ -30,6 +30,10 @@ export class UserService {
     return this.userRepo.userExists(username)
   }
 
+  async getDataForAuth(username) {
+    return this.userRepo.getUserByUsername(username)
+  }
+
   async getUserIdByUsername(username) {
     return this.userRepo.getUserIdByUsername(username)
   }
