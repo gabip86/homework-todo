@@ -1,6 +1,7 @@
 export class TodoController {
-  constructor(todoService) {
+  constructor(todoService, userService) {
     this.todoService = todoService
+    this.userService = userService
     this.getAllTodo = this.getAllTodo.bind(this)
     this.addNewTodo = this.addNewTodo.bind(this)
     this.deleteTodo = this.deleteTodo.bind(this)
@@ -8,7 +9,11 @@ export class TodoController {
 
   async getAllTodo(req, res) {
     try {
-      const results = await this.todoService.getAllTodo()
+      const username = req.user.username
+      console.log(username)
+      const userId = await this.userService.getUserIdByUsername(username)
+      console.log(userId)
+      const results = await this.todoService.getAllTodo(userId)
       res.status(200).json(results)
     } catch (e) {
       res.status(500)

@@ -14,6 +14,17 @@ export class TodoRepo {
     })
   }
 
+  async getAllTodoById(id) {
+    return new Promise((resolve, reject) => {
+      this.db.query(`SELECT * FROM todos WHERE user_id = ?`, [id], (err, results) => {
+        if (err) {
+          return reject(err)
+        }
+        return resolve(results)
+      })
+    })
+  }
+
   async addNewTodo(inputs) {
     return new Promise((resolve, reject) => {
       this.db.query(`INSERT INTO todos (text, isDone, user_id) VALUES (?,?,?)`, [inputs.text, inputs.isDone, inputs.userId], (err, results) => {

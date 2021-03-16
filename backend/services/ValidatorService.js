@@ -11,7 +11,6 @@ export const validateRegisterByInputs = (inputs) => {
     joi.attempt(inputs, schema)
   } catch (e) {
     if (e.message) {
-      console.log(e.message)
       if (e.message.includes("empty")) {
         if (e.message.includes("username") && !e.message.includes("password")) {
           throw new HttpError(500, "username is required")

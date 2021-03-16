@@ -1,7 +1,8 @@
 import axios from 'axios'
 
-const addTodo = async (todo) => {
+const addTodo = (todo) => {
   try {
+    console.log(todo)
     return axios.post("http://localhost:3000/addtodo", { todo },
       { headers: { authorization: "Bearer " + localStorage.getItem('accessToken') } })
   } catch (err) {
