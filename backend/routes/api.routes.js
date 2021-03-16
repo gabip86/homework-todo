@@ -9,5 +9,6 @@ router.post('/register', userController.register)
 router.post('/login', userController.login)
 router.post('/addtodo', authHandler, todoController.addNewTodo)
 router.delete('/deletetodo', authHandler, todoController.deleteTodo)
+router.get('/auth', authHandler, userController.authUser)
 
 export { router }

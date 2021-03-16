@@ -10,6 +10,7 @@ export class UserController {
     this.getAllUser = this.getAllUser.bind(this)
     this.register = this.register.bind(this)
     this.login = this.login.bind(this)
+    this.authUser = this.authUser.bind(this)
   }
 
   async getUser(req, res) {
@@ -61,6 +62,16 @@ export class UserController {
       }
     } catch {
       res.status(500).send()
+    }
+  }
+
+  async authUser(req, res) {
+    const { username: currentUsername } = req.user
+    try {
+      const { id, username } = await this.userService.getDataForAuth(currentUsername)
+      res.status(200).json({ id, username })
+    } catch (e) {
+      res.status(500).json({ message: e.message })
     }
   }
 }
