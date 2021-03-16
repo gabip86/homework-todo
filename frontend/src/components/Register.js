@@ -1,57 +1,13 @@
-import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import React from 'react'
 import { Container, Form, Button, Row, Col } from 'react-bootstrap'
-import axios from 'axios'
+import useForm from '../utils/hooks/useForm.js'
 
 function Register() {
-  const [inputs, setInputs] = useState({
+  const { inputs, handleInputChange, handleSubmit, error, validated } = useForm({
     username: '',
-    password: ''
+    password: '',
+    error: ''
   })
-  const [validated, setValidated] = useState(false)
-  const [error, setError] = useState('')
-  const history = useHistory()
-
-  const username = inputs.username
-  const password = inputs.password
-
-  const handleInputChange = e => {
-    setInputs({ ...inputs, [e.target.name]: e.target.value })
-  }
-
-  const handleSubmit = e => {
-    const form = e.currentTarget
-    if (form.checkValidity() === false) {
-      e.stopPropagation()
-    }
-
-    e.preventDefault()
-    setValidated(true)
-
-    const userObject = JSON.stringify({
-      username: username,
-      password: password,
-    })
-
-    if (!inputs.username) {
-      setError("Username is required.")
-    } else if (!inputs.password) {
-      setError("Password is required")
-    } else {
-      axios.post('http://localhost:3000/register', userObject, {
-        headers: {
-          "content-type": "application/json"
-        }
-      })
-        .then(response => {
-          history.push('/login')
-        })
-        .catch(err => {
-          const {msg} = err.response.data
-          setError(msg)
-        })
-    }
-  }
 
   return (
     <Container className="w-50 mx-auto mt-5 needs-validation">

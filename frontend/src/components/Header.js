@@ -10,7 +10,7 @@ const Header = ({ auth, setAuth }) => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            {!auth ?
+            {!auth?.user ?
               <><Nav.Link href="/register">Register</Nav.Link>
                 <Nav.Link href="/login">Login</Nav.Link>
               </> :

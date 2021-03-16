@@ -1,52 +1,15 @@
-import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import React from 'react'
 import { Container, Form, Button, Row, Col } from 'react-bootstrap'
-import axios from 'axios'
+import useForm from '../utils/hooks/useFormLogin.js'
 
 const Login = () => {
-  const [inputs, setInputs] = useState({
+
+  const { inputs, handleInputChange, handleSubmit, error, validated } = useForm({
     username: '',
-    password: ''
+    password: '',
+    error: ''
   })
-  const [validated, setValidated] = useState(false)
-  const [error, setError] = useState('')
-  const history = useHistory()
 
-  const username = inputs.username
-  const password = inputs.password
-
-  const handleInputChange = e => {
-    setInputs({ ...inputs, [e.target.name]: e.target.value })
-  }
-
-  const handleSubmit = e => {
-    const form = e.currentTarget
-    if (form.checkValidity() === false) {
-      e.stopPropagation()
-    }
-    
-    e.preventDefault()
-    setValidated(true)
-
-    const userObject = JSON.stringify({
-      username: username,
-      password: password,
-    })
-
-    axios.post('http://localhost:3000/login', userObject, {
-      headers: {
-        "content-type": "application/json"
-      }
-    })
-      .then(response => {
-        if (response.status === 200) {
-          const { accessToken } = response.data
-          localStorage.setItem('accessToken', accessToken)
-        }
-        history.push('/todos')
-      })
-      .catch(err => console.error(err))
-  }
   return (
     <Container className="w-50 mx-auto mt-5">
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
@@ -63,7 +26,7 @@ const Login = () => {
             />
             {/* <Form.Control.Feedback>Looks Good!</Form.Control.Feedback> */}
             <Form.Control.Feedback type="invalid">
-              Username is required.
+              {error}
             </Form.Control.Feedback>
           </Col>
         </Form.Group>
@@ -80,7 +43,7 @@ const Login = () => {
             />
             {/* <Form.Control.Feedback>Looks Good!</Form.Control.Feedback> */}
             <Form.Control.Feedback type="invalid">
-              Password is required.
+              {error}
             </Form.Control.Feedback>
           </Col>
         </Form.Group>
