@@ -9,6 +9,6 @@ import { TodoService } from '../services/TodoService.js'
 export const userRepo = new UserRepo(mysqlConnection)
 export const todoRepo = new TodoRepo(mysqlConnection)
 export const userService = new UserService(userRepo)
-export const todoService = new TodoService(todoRepo)
+export const todoService = new TodoService(todoRepo, userRepo)
 export const userController = new UserController(userService)
 export const todoController = new TodoController(todoService, userService)

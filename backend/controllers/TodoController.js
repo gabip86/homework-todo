@@ -13,7 +13,8 @@ export class TodoController {
       console.log(username)
       const userId = await this.userService.getUserIdByUsername(username)
       console.log(userId)
-      const results = await this.todoService.getAllTodo(userId)
+      const results = await this.todoService.getAllTodoById(userId)
+      console.log(results)
       res.status(200).json(results)
     } catch (e) {
       res.status(500)
