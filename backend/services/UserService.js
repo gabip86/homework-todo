@@ -3,16 +3,11 @@ import bcrypt from 'bcrypt'
 export class UserService {
   constructor(userRepo) {
     this.userRepo = userRepo
-    this.getAllUser = this.getAllUser.bind(this)
     this.hashPassword = this.hashPassword.bind(this)
     this.addNewUser = this.addNewUser.bind(this)
     this.userExists = this.userExists.bind(this)
     this.getUserIdByUsername = this.getUserIdByUsername.bind(this)
     this.getDataForAuth = this.getDataForAuth.bind(this)
-  }
-
-  async getAllUser() {
-    return this.userRepo.getAllUser()
   }
 
   async hashPassword(password) {

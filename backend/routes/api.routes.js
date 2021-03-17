@@ -4,7 +4,6 @@ import { userController, todoController } from '../dependencies/dependencyInject
 
 const router = express.Router()
 
-router.get('/users', authHandler, userController.getAllUser)
 router.post('/register', userController.register)
 router.post('/login', userController.login)
 router.get('/todos', authHandler, todoController.getAllTodo)
