@@ -15,7 +15,7 @@ export class UserService {
   }
 
   async decodePassword(password, inputHashedPassword) {
-    return bcryptjs.compare(password, inputHashedPassword);
+    return bcrypt.compare(password, inputHashedPassword);
   }
 
   async addNewUser(inputs) {
