@@ -5,18 +5,16 @@ import Todo from './Todo'
 import { Card } from 'react-bootstrap'
 import axios from 'axios'
 
-const MainTodo = () => {
+const MainTodo = ({ auth }) => {
   const [todos, setTodos] = useState([])
 
   useEffect(() => {
-    const token = localStorage.getItem('accessToken')
-    if (token) {
+    if (auth.token) {
       axios.get('http://localhost:3000/todos', {
         headers: {
-          authorization: `Bearer ${token}`
+          authorization: "Bearer " + auth.token
         }
       }).then(({ data }) => {
-        console.log(data)
         setTodos(data)
       })
         .catch(console.error)
@@ -24,21 +22,15 @@ const MainTodo = () => {
   }, [])
 
   const addTodo = text => {
-    const todo = {
+    const todo = JSON.stringify({
       text: text,
       isDone: false
-    }
+    })
 
     try {
-      axios.post("http://localhost:3000/addtodo",
-        { todo }, {
+      axios.post("http://localhost:3000/addtodo", todo, {
         headers: {
-          authorization: "Bearer " + localStorage.getItem('accessToken')
-        }
-      })
-      axios.get("http://localhost:3000/todos", {
-        headers: {
-          authorization: "Bearer " + localStorage.getItem('accessToken')
+          authorization: "Bearer " + auth.token
         }
       }).then(res => setTodos(res))
     } catch (err) {

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import axios from 'axios'
 
-const useForm = (initialValues) => {
+const useForm = (initialValues, auth, setAuth) => {
   const [inputs, setInputs] = useState(initialValues)
   const [validated, setValidated] = useState(false)
   const [error, setError] = useState('')
@@ -39,6 +39,7 @@ const useForm = (initialValues) => {
           if (response.status === 200) {
             const { accessToken } = response.data
             localStorage.setItem('accessToken', accessToken)
+            setAuth({...auth, token: accessToken})
           }
           history.push('/todos')
         })

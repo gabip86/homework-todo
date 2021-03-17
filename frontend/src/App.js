@@ -43,7 +43,7 @@ function App() {
             <Register />
           </Route>
           <Route path="/login">
-            <Login />
+            <Login setAuth={setAuth} auth={auth}/>
           </Route>
           <Route path="/todos">
             <MainTodo auth={auth} setAuth={setAuth} />

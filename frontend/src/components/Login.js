@@ -2,13 +2,13 @@ import React from 'react'
 import { Container, Form, Button, Row, Col } from 'react-bootstrap'
 import useForm from '../utils/hooks/useFormLogin.js'
 
-const Login = () => {
+const Login = ({ auth, setAuth }) => {
 
   const { inputs, handleInputChange, handleSubmit, error, validated } = useForm({
     username: '',
     password: '',
     error: ''
-  })
+  }, auth, setAuth)
 
   return (
     <Container className="w-50 mx-auto mt-5">
@@ -24,7 +24,6 @@ const Login = () => {
               name="username"
               required
             />
-            {/* <Form.Control.Feedback>Looks Good!</Form.Control.Feedback> */}
             <Form.Control.Feedback type="invalid">
               {error}
             </Form.Control.Feedback>
@@ -41,7 +40,6 @@ const Login = () => {
               name="password"
               required
             />
-            {/* <Form.Control.Feedback>Looks Good!</Form.Control.Feedback> */}
             <Form.Control.Feedback type="invalid">
               {error}
             </Form.Control.Feedback>

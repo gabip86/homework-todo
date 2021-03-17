@@ -2,10 +2,11 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { Nav } from 'react-bootstrap'
 
-const Logout = (props) => {
+const Logout = ({ history, setAuth }) => {
   const handleLogout = () => {
     localStorage.clear('accessToken')
-    props.history.push('/login')
+    setAuth(null)
+    history.push('/login')
   }
 
   return (

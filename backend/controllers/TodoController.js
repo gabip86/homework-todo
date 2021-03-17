@@ -21,6 +21,7 @@ export class TodoController {
   async addNewTodo(req, res) {
     const { text, isDone } = req.body
     const { username } = req.user
+    console.log(text, isDone)
     const userId = await this.todoService.getUserIdByUsername(username)
     try {
       const result = await this.todoService.addNewTodo({ text, isDone, userId })

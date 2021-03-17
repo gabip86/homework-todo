@@ -3,6 +3,7 @@ import { Navbar, Nav } from 'react-bootstrap'
 import Logout from './Logout'
 
 const Header = ({ auth, setAuth }) => {
+  console.log('header', auth)
   return (
     <div>
       <Navbar bg="dark" variant="dark" expand="lg">
@@ -13,7 +14,7 @@ const Header = ({ auth, setAuth }) => {
                 <Nav.Link href="/login">Login</Nav.Link>
               </> :
               <><Nav.Link href="/todos">Todos</Nav.Link>
-                <Logout />
+                <Logout setAuth={setAuth}/>
               </>
             }
           </Nav>
