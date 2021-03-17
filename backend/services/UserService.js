@@ -8,6 +8,7 @@ export class UserService {
     this.addNewUser = this.addNewUser.bind(this)
     this.userExists = this.userExists.bind(this)
     this.getUserIdByUsername = this.getUserIdByUsername.bind(this)
+    this.getDataForAuth = this.getDataForAuth.bind(this)
   }
 
   async getAllUser() {

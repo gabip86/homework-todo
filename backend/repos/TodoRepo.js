@@ -31,7 +31,11 @@ export class TodoRepo {
         if (err) {
           return reject(err)
         }
-        return resolve({ message: `${inputs.text} has been added.` })
+        const savedTodo = {
+          text: inputs.text,
+          isDone: inputs.isDone
+        }
+        return resolve({ savedTodo })
       })
     })
   }

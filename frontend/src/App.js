@@ -29,7 +29,7 @@ function App() {
       })
         .catch(console.error)
     }
-  })
+  }, [auth])
 
   return (
     <div className="app">

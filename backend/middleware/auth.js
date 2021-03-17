@@ -9,8 +9,8 @@ export default function authHandler(req, res, next) {
   }
 
   jwt.verify(accessToken, config.secret, (err, user) => {
-    if (err) res.status(403).json({ message: 'The token is no longer valid.' })
     req.user = user
+    if (err) res.status(403).json({ message: 'The token is no longer valid.' })
     next()
   })
 }
