@@ -16,12 +16,12 @@ const MainTodo = () => {
           authorization: `Bearer ${token}`
         }
       }).then(({ data }) => {
-        const { text } = data
-        setTodos({ ...todos }, text)
+        console.log(data)
+        setTodos(data)
       })
         .catch(console.error)
     }
-  }, [todos])
+  }, [])
 
   const addTodo = text => {
     const todo = {

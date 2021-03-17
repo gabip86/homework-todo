@@ -13,5 +13,5 @@ test('Hashing password, fails', async () => {
 })
 
 test('Get user by username, success', async () => {
-  const user = await userService.getUserByUsername("")
+  const user = await userService.getUserByUsername("username")
 })
