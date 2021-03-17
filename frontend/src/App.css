@@ -1,6 +1,6 @@
 .app {
-  /* background-image: url('./img/mint_bg.jpg'); */
-  background-color: lightgrey;
+  background-image: url('./img/splatter_bg.jpg');
+  background-repeat: no-repeat;
   min-height: 600px;
 }
 
