@@ -5,7 +5,7 @@ import Todo from './Todo'
 import { Card } from 'react-bootstrap'
 import axios from 'axios'
 
-const MainTodo = ({ auth, }) => {
+const MainTodo = () => {
   const [todos, setTodos] = useState([])
 
   useEffect(() => {
@@ -17,7 +17,7 @@ const MainTodo = ({ auth, }) => {
         }
       }).then(({ data }) => {
         const { text } = data
-        setTodos({ ...todos })
+        setTodos({ ...todos }, text)
       })
         .catch(console.error)
     }
@@ -45,11 +45,6 @@ const MainTodo = ({ auth, }) => {
       console.error(err)
     }
   }
-
-  // const addTodo = text => {
-  //   const newTodos = [...todos, { text }]
-  //   setTodos(newTodos)
-  // }
 
   const markTodo = index => {
     const newTodos = [...todos]
