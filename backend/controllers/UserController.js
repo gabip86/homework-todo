@@ -50,7 +50,7 @@ export class UserController {
       const user = await this.userService.getUserByUsername(username)
       if (await bcrypt.compare(password, user.password)) {
         const accessToken = jwt.sign({ username: username }, config.secret, { expiresIn: '1h' })
-        res.json({ accessToken: accessToken })
+        res.json({ username: username, accessToken: accessToken })
       } else {
         res.json({ message: 'Password is incorrect' })
       }
