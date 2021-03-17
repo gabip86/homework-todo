@@ -14,6 +14,10 @@ export class UserService {
     return bcrypt.hash(password, 10)
   }
 
+  async decodePassword(password, inputHashedPassword) {
+    return bcryptjs.compare(password, inputHashedPassword);
+  }
+
   async addNewUser(inputs) {
     return this.userRepo.addNewUser(inputs)
   }
