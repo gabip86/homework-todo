@@ -23,7 +23,11 @@ export class UserService {
   }
 
   async getUserByUsername(username) {
-    return this.userRepo.getUserByUsername(username)
+    try {
+      return this.userRepo.getUserByUsername(username)
+    } catch (e) {
+      throw Error('Cannot find this user.')
+    }
   }
 
   async userExists(username) {
