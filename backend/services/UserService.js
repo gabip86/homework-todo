@@ -27,7 +27,11 @@ export class UserService {
   }
 
   async userExists(username) {
-    return this.userRepo.userExists(username)
+    const exists = this.userRepo.userExists(username)
+    if (exists) {
+      throw Error('User is already taken.')
+    }
+    return exists
   }
 
   async getDataForAuth(username) {

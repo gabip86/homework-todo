@@ -36,10 +36,7 @@ export class UserController {
     const hashedPassword = await this.userService.hashPassword(password)
     try {
       validateRegisterByInputs({ username, password })
-      const exists = await this.userService.userExists(username)
-      if (exists) {
-        throw Error("User is already taken.")
-      }
+      await this.userService.userExists(username)
       const result = await this.userService.addNewUser({ username, hashedPassword })
       res.status(200).json(result)
     } catch (e) {
