@@ -25,3 +25,23 @@ export const validateRegisterByInputs = (inputs) => {
     }
   }
 }
+
+export const validateLoginByInputs = (inputs) => {
+  try {
+    joi.attempt(inputs, schema)
+  } catch (e) {
+    if (e.message) {
+      if (e.message.includes("empty")) {
+        if (e.message.includes("username") && !e.message.includes("password")) {
+          throw new HttpError(500, "username is required")
+        } else if (e.message.includes("username") && e.message.includes("password")) {
+          throw new HttpError(500, "username and password is required")
+        } else if (e.message.includes("password")) {
+          throw new HttpError(500, "password is required")
+        }
+      } else if (e.message.includes("length must be")) {
+        throw new HttpError(500, "password should be at least 8 characters long")
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import { validateRegisterByInputs } from '../services/ValidatorService.js'
+import { validateRegisterByInputs, validateLoginByInputs } from '../services/ValidatorService.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import config from '../config.js'
@@ -47,6 +47,7 @@ export class UserController {
   async login(req, res) {
     const { username, password } = req.body
     try {
+      validateLoginByInputs({ username, password })
       const user = await this.userService.getUserByUsername(username)
       const id = user.id
       if (await bcrypt.compare(password, user.password)) {
