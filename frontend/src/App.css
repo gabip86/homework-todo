@@ -1,11 +1,32 @@
-.app {
+body {
   background-image: url('./img/splatter_bg.jpg');
   background-repeat: no-repeat;
-  min-height: 600px;
+  /* min-height: 600px; */
 }
 
 .container {
   padding: 30px;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.wrapper h3 {
+  text-align: center;
+  padding-bottom: 10%;
+}
+
+.inner {
+  width: 50%;
+  margin: auto;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  background: white;
+  box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+  border-radius: 15px;
 }
   
 .todo {
@@ -13,5 +34,11 @@
   display: flex;
   font-size: 18px;
   justify-content: space-between;
+}
+
+.form {
+  background-color: white;
+  padding: 10%;
+  border-radius: 15px;
 }
   

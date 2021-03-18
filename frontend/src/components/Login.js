@@ -11,8 +11,9 @@ const Login = ({ auth, setAuth }) => {
   }, auth, setAuth)
 
   return (
-    <Container className="w-50 mx-auto mt-5">
+    <Container className="w-75 mx-auto">
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
+        <h3>Login</h3>
         <Form.Group as={Row} controlId="validationCustom01">
           <Form.Label column sm={2}>Username</Form.Label>
           <Col sm={10}>
@@ -45,7 +46,7 @@ const Login = ({ auth, setAuth }) => {
             </Form.Control.Feedback>
           </Col>
         </Form.Group>
-        <Button variant="primary" type="submit">
+        <Button variant="info" type="submit">
           Login
         </Button>
       </Form>

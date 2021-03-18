@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { withRouter } from 'react-router-dom'
 import FormTodo from './FormTodo'
 import Todo from './Todo'
 import { Card } from 'react-bootstrap'
@@ -19,7 +18,7 @@ const MainTodo = ({ auth }) => {
       })
         .catch(console.error)
     }
-  }, [auth.token, todos])
+  }, [])
 
   const addTodo = text => {
     const isDone = false
@@ -57,7 +56,7 @@ const MainTodo = ({ auth }) => {
 
   return (
     <div className="app">
-      <div className="container">
+      <div className="form">
         {!auth?.user?.username ?
           <>
             <h1 className="text-center mb-4">Todo List</h1>
@@ -86,4 +85,4 @@ const MainTodo = ({ auth }) => {
   )
 }
 
-export default withRouter(MainTodo)
+export default MainTodo

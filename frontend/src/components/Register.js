@@ -10,8 +10,9 @@ function Register() {
   })
 
   return (
-    <Container className="w-50 mx-auto mt-5 needs-validation">
+    <Container className="w-75 mx-auto needs-validation">
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
+        <h3>Register</h3>
         <Form.Group as={Row} controlId="validationCustom01">
           <Form.Label column sm={2}>Username</Form.Label>
           <Col sm={10}>
@@ -50,7 +51,7 @@ function Register() {
             </Form.Text>
           </Col>
         </Form.Group>
-        <Button variant="primary" type="submit">
+        <Button variant="info" type="submit">
           Register
         </Button>
       </Form>

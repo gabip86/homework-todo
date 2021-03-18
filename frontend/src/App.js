@@ -5,7 +5,6 @@ import {
   Switch,
 } from 'react-router-dom'
 import ProtectedRoute from './components/ProtectedRoute'
-import Main from './components/Main'
 import Header from './components/Header'
 import Register from './components/Register'
 import Login from './components/Login'
@@ -59,18 +58,22 @@ function App() {
 
   return (
     <div className="app">
-      <Router>
-        <Header auth={auth} setAuth={setAuth} />
-        <Switch>
-          {
-            routes(auth,setAuth).map(({allowed, path, children, redirectPath}, index) => 
-              <ProtectedRoute key={`protecte-route-${index}`} allowed={allowed} path={path} redirectPath={redirectPath}>
-                {children}
-              </ProtectedRoute>
-            )
-          }
-        </Switch>
-      </Router>
+      <div className="wrapper">
+        <Router>
+          <Header auth={auth} setAuth={setAuth} />
+          <div className="inner">
+            <Switch>
+              {
+                routes(auth, setAuth).map(({ allowed, path, children, redirectPath }, index) =>
+                  <ProtectedRoute key={`protecte-route-${index}`} allowed={allowed} path={path} redirectPath={redirectPath}>
+                    {children}
+                  </ProtectedRoute>
+                )
+              }
+            </Switch>
+          </div>
+        </Router>
+      </div>
     </div>
   )
 }

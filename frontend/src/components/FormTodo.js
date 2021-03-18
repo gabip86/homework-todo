@@ -22,7 +22,7 @@ const FormTodo = ({ addTodo }) => {
           onChange={e => setValue(e.target.value)}
           placeholder="Add new todo" />
       </Form.Group>
-      <Button variant="primary mb-3" type="submit">
+      <Button variant="info mb-3" type="submit">
         Submit
     </Button>
     </Form>
