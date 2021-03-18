@@ -39,47 +39,51 @@ const MainTodo = ({ auth }) => {
     }
   }
 
-  const markTodo = index => {
-    const newTodos = [...todos]
-    newTodos[index].isDone = true
-    setTodos(newTodos)
-  }
+  const markTodo = id => {
+    axios.put(`http://localhost:3000/todos/${id}`, {
+      headers: {
+        authorization: "Bearer " + auth.token
+      }
+    })
+}
 
-  const removeTodo = index => {
-    const newTodos = [...todos]
-    newTodos.splice(index, 1)
-    setTodos(newTodos)
-  }
+const removeTodo = id => {
+  axios.delete(`http://localhost:3000/todos/${id}`, {
+    headers: {
+      authorization: "Bearer " + auth.token
+    }
+  })
+}
 
-  return (
-    <div className="app">
-      <div className="container">
-        {!auth?.user?.username ?
-          <>
-            <h1 className="text-center mb-4">Todo List</h1>
-          </> :
-          <>
-            <h1 className="text-center mb-4">{auth.user.username}'s Todo List</h1>
-          </>
-        }
-        <FormTodo addTodo={addTodo} />
-        <div>
-          {todos.map((todo, index) => (
-            <Card key={index}>
-              <Card.Body>
-                <Todo
-                  index={index}
-                  todo={todo}
-                  markTodo={markTodo}
-                  removeTodo={removeTodo}
-                />
-              </Card.Body>
-            </Card>
-          ))}
-        </div>
+return (
+  <div className="app">
+    <div className="container">
+      {!auth?.user?.username ?
+        <>
+          <h1 className="text-center mb-4">Todo List</h1>
+        </> :
+        <>
+          <h1 className="text-center mb-4">{auth.user.username}'s Todo List</h1>
+        </>
+      }
+      <FormTodo addTodo={addTodo} />
+      <div>
+        {todos.map((todo, id) => (
+          <Card key={id}>
+            <Card.Body>
+              <Todo
+                index={id}
+                todo={todo}
+                markTodo={markTodo}
+                removeTodo={removeTodo}
+              />
+            </Card.Body>
+          </Card>
+        ))}
       </div>
     </div>
-  )
+  </div>
+)
 }
 
 export default MainTodo
