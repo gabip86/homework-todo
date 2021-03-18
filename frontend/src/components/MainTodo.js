@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { withRouter } from 'react-router-dom'
 import FormTodo from './FormTodo'
 import Todo from './Todo'
 import { Card } from 'react-bootstrap'
@@ -45,45 +45,45 @@ const MainTodo = ({ auth }) => {
         authorization: "Bearer " + auth.token
       }
     })
-}
+  }
 
-const removeTodo = id => {
-  axios.delete(`http://localhost:3000/todos/${id}`, {
-    headers: {
-      authorization: "Bearer " + auth.token
-    }
-  })
-}
-
-return (
-  <div className="app">
-    <div className="container">
-      {!auth?.user?.username ?
-        <>
-          <h1 className="text-center mb-4">Todo List</h1>
-        </> :
-        <>
-          <h1 className="text-center mb-4">{auth.user.username}'s Todo List</h1>
-        </>
+  const removeTodo = id => {
+    axios.delete(`http://localhost:3000/todos/${id}`, {
+      headers: {
+        authorization: "Bearer " + auth.token
       }
-      <FormTodo addTodo={addTodo} />
-      <div>
-        {todos.map((todo, id) => (
-          <Card key={id}>
-            <Card.Body>
-              <Todo
-                index={id}
-                todo={todo}
-                markTodo={markTodo}
-                removeTodo={removeTodo}
-              />
-            </Card.Body>
-          </Card>
-        ))}
+    })
+  }
+
+  return (
+    <div className="app">
+      <div className="container">
+        {!auth?.user?.username ?
+          <>
+            <h1 className="text-center mb-4">Todo List</h1>
+          </> :
+          <>
+            <h1 className="text-center mb-4">{auth.user.username}'s Todo List</h1>
+          </>
+        }
+        <FormTodo addTodo={addTodo} />
+        <div>
+          {todos.map((todo, id) => (
+            <Card key={id}>
+              <Card.Body>
+                <Todo
+                  index={id}
+                  todo={todo}
+                  markTodo={markTodo}
+                  removeTodo={removeTodo}
+                />
+              </Card.Body>
+            </Card>
+          ))}
+        </div>
       </div>
     </div>
-  </div>
-)
+  )
 }
 
-export default MainTodo
+export default withRouter(MainTodo)

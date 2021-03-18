@@ -3,8 +3,10 @@ import './App.css'
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  Redirect
 } from 'react-router-dom'
+import ProtectedRoute from './components/ProtectedRoute'
 import Main from './components/Main'
 import Header from './components/Header'
 import Register from './components/Register'
@@ -18,6 +20,7 @@ function App() {
     user: { username: null, userId: null },
     token: localStorage.getItem('accessToken')
   })
+  // const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken')
@@ -34,23 +37,41 @@ function App() {
     }
   }, [])
 
+  const routes = (auth, setAuth) => {
+    return [
+      {
+        allowed: !auth?.user?.username,
+        path: "/register",
+        children: <Register />,
+        redirectPath: "/login"
+      },
+      {
+        allowed: !auth?.user?.username,
+        path: "/login",
+        children: <Login auth={auth} setAuth={setAuth} />,
+        redirectPath: "/todos"
+      },
+      {
+        allowed: auth?.user?.username,
+        path: "/todos",
+        children: <MainTodo auth={auth} setAuth={setAuth} />,
+        redirectPath: "/login"
+      },
+    ]
+  }
+
   return (
     <div className="app">
       <Router>
         <Header auth={auth} setAuth={setAuth} />
         <Switch>
-          <Route exact path="/">
-            <Main />
-          </Route>
-          <Route path="/register">
-            <Register />
-          </Route>
-          <Route path="/login">
-            <Login setAuth={setAuth} auth={auth} />
-          </Route>
-          <Route path="/todos">
-            <MainTodo auth={auth} setAuth={setAuth} />
-          </Route>
+          {
+            routes(auth,setAuth).map(({allowed, path, children, redirectPath}, index) => 
+              <ProtectedRoute key={`protecte-route-${index}`} allowed={allowed} path={path} redirectPath={redirectPath}>
+                {children}
+              </ProtectedRoute>
+            )
+          }
         </Switch>
       </Router>
     </div>
