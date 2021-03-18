@@ -6,10 +6,7 @@ import { Card } from 'react-bootstrap'
 import axios from 'axios'
 
 const MainTodo = ({ auth }) => {
-  const [todos, setTodos] = useState([{
-    text: '',
-    isDone: false
-  }])
+  const [todos, setTodos] = useState([])
 
   useEffect(() => {
     if (auth.token) {
@@ -22,24 +19,20 @@ const MainTodo = ({ auth }) => {
       })
         .catch(console.error)
     }
-  }, [])
+  }, [todos])
 
   const addTodo = text => {
-    const todo = JSON.stringify({
-      text: text,
-      isDone: false,
-      userId: auth.user.id
-    })
+    const isDone = false
 
     try {
-      console.log(auth.token)
-      axios.post("http://localhost:3000/todos", todo, {
+      axios.post("http://localhost:3000/todos", {
+        text,
+        isDone,
+        userId: auth.user.id
+      }, {
         headers: {
           authorization: "Bearer " + auth.token
         }
-      }).then(res => {
-        const { text, isDone } = res.data
-        setTodos({ ...todos, text, isDone })
       })
     } catch (err) {
       console.error(err)
@@ -61,7 +54,14 @@ const MainTodo = ({ auth }) => {
   return (
     <div className="app">
       <div className="container">
-        <h1 className="text-center mb-4">{auth.user.username}'s Todo List</h1>
+        {!auth?.user?.username ?
+          <>
+            <h1 className="text-center mb-4">Todo List</h1>
+          </> :
+          <>
+            <h1 className="text-center mb-4">{auth.user.username}'s Todo List</h1>
+          </>
+        }
         <FormTodo addTodo={addTodo} />
         <div>
           {todos.map((todo, index) => (
