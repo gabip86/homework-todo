@@ -14,7 +14,10 @@ import MainTodo from './components/MainTodo'
 import axios from 'axios'
 
 function App() {
-  const [auth, setAuth] = useState({ user: { username: null }, token: localStorage.getItem('accessToken') })
+  const [auth, setAuth] = useState({
+    user: { username: null, userId: null },
+    token: localStorage.getItem('accessToken')
+  })
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken')
@@ -24,8 +27,8 @@ function App() {
           authorization: `Bearer ${token}`
         }
       }).then(({ data }) => {
-        const { username } = data
-        setAuth({ ...auth, user: { username } })
+        const { username, id } = data
+        setAuth({ ...auth, user: { username, id } })
       })
         .catch(console.error)
     }
@@ -43,7 +46,7 @@ function App() {
             <Register />
           </Route>
           <Route path="/login">
-            <Login setAuth={setAuth} auth={auth}/>
+            <Login setAuth={setAuth} auth={auth} />
           </Route>
           <Route path="/todos">
             <MainTodo auth={auth} setAuth={setAuth} />

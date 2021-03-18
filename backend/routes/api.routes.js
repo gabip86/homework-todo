@@ -7,8 +7,9 @@ const router = express.Router()
 router.post('/register', userController.register)
 router.post('/login', userController.login)
 router.get('/todos', authHandler, todoController.getAllTodo)
-router.post('/addtodo', authHandler, todoController.addNewTodo)
-router.delete('/deletetodo', authHandler, todoController.deleteTodo)
+router.post('/todos', authHandler, todoController.addNewTodo)
+router.put('/todos/:id', authHandler, todoController.markTodo)
+router.delete('/todos/:id', todoController.deleteTodo)
 router.get('/auth', authHandler, userController.authUser)
 
 export { router }

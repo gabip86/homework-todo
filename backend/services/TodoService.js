@@ -7,6 +7,7 @@ export class TodoService {
     this.addNewTodo = this.addNewTodo.bind(this)
     this.getUserIdByUsername = this.getUserIdByUsername.bind(this)
     this.deleteTodoById = this.deleteTodoById.bind(this)
+    this.markTodo = this.markTodo.bind(this)
   }
 
   async getAllTodo() {
@@ -19,6 +20,10 @@ export class TodoService {
 
   async addNewTodo(inputs) {
     return this.todoRepo.addNewTodo(inputs)
+  }
+  
+  async markTodo(id) {
+    this.todoRepo.markTodo(id)
   }
 
   async deleteTodoById(id) {
