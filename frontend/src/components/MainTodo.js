@@ -19,7 +19,7 @@ const MainTodo = ({ auth }) => {
       })
         .catch(console.error)
     }
-  }, [todos])
+  }, [auth.token, todos])
 
   const addTodo = text => {
     const isDone = false

@@ -18,7 +18,6 @@ function App() {
     user: { username: null, userId: null },
     token: localStorage.getItem('accessToken')
   })
-  // const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken')

@@ -5,7 +5,7 @@ import Logout from './Logout'
 const Header = ({ auth, setAuth }) => {
   return (
     <div>
-      <Navbar bg="dark" variant="dark" expand="lg">
+      <Navbar bg="dark" variant="dark" expand="md">
         <Navbar.Brand href="/">MyTodoApp</Navbar.Brand>
           <Nav className="mr-auto">
             {!auth?.user?.username ?
