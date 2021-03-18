@@ -23,7 +23,7 @@ export class TodoService {
   }
   
   async markTodo(id) {
-    this.todoRepo.markTodo(id)
+    return this.todoRepo.markTodo(id)
   }
 
   async deleteTodoById(id) {

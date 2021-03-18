@@ -30,7 +30,7 @@ export class TodoController {
   }
 
   async markTodo(req, res) {
-    const id = req.params.id
+    const { id } = req.params
     try {
       const result = await this.todoService.markTodo(id)
       res.status(200).json(result)
@@ -40,7 +40,7 @@ export class TodoController {
   }
 
   async deleteTodo(req, res) {
-    const { id } = req.body
+    const { id } = req.params
     try {
       const result = await this.todoService.deleteTodoById(id)
       res.status(200).json(result)

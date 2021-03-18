@@ -9,7 +9,7 @@ router.post('/login', userController.login)
 router.get('/todos', authHandler, todoController.getAllTodo)
 router.post('/todos', authHandler, todoController.addNewTodo)
 router.put('/todos/:id', authHandler, todoController.markTodo)
-router.delete('/todos/:id', todoController.deleteTodo)
+router.delete('/todos/:id', authHandler, todoController.deleteTodo)
 router.get('/auth', authHandler, userController.authUser)
 
 export { router }
