@@ -3,8 +3,6 @@ import './App.css'
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Redirect
 } from 'react-router-dom'
 import ProtectedRoute from './components/ProtectedRoute'
 import Main from './components/Main'
@@ -35,7 +33,7 @@ function App() {
       })
         .catch(console.error)
     }
-  }, [])
+  }, [auth])
 
   const routes = (auth, setAuth) => {
     return [
@@ -43,7 +41,7 @@ function App() {
         allowed: !auth?.user?.username,
         path: "/register",
         children: <Register />,
-        redirectPath: "/login"
+        redirectPath: "/todos"
       },
       {
         allowed: !auth?.user?.username,
