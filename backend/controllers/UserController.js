@@ -1,8 +1,6 @@
-import { validateRegisterByInputs, validateLoginByInputs } from '../services/ValidatorService.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import config from '../config.js'
-import e from 'express'
 
 export class UserController {
   constructor(userService) {
@@ -35,8 +33,7 @@ export class UserController {
   async register(req, res) {
     let { username, password } = req.body
     try {
-      validateRegisterByInputs({ username, password })
-      const result = await this.userService.addNewUser({ username, password })
+      const result = await this.userService.registerNewUser({ username, password })
       res.status(200).json(result)
     } catch (e) {
       res.status(500).json({ message: e.message })
@@ -46,15 +43,8 @@ export class UserController {
   async login(req, res) {
     const { username, password } = req.body
     try {
-      validateLoginByInputs({ username, password })
-      const user = await this.userService.getUserByUsername(username)
-      const id = user.id
-      if (await bcrypt.compare(password, user.password)) {
-        const accessToken = jwt.sign({ username: username }, config.secret, { expiresIn: '1h' })
-        res.status(200).json({ username, id, accessToken })
-      } else {
-        res.status(403).json({ message: 'Password is incorrect' })
-      }
+      const result = await this.userService.loginUser({ username, password })
+      res.status(200).json(result)
     } catch (e) {
       res.status(500).json({ message: e.message })
     }

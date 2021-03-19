@@ -15,7 +15,7 @@ export const validateRegisterByInputs = (inputs) => {
         if (e.message.includes("username") && !e.message.includes("password")) {
           throw new HttpError(500, "username is required")
         } else if (e.message.includes("username") && e.message.includes("password")) {
-          throw new HttpError(500, "username and password is required")
+          throw new HttpError(500, "username and password are required")
         } else if (e.message.includes("password")) {
           throw new HttpError(500, "password is required")
         }
@@ -35,7 +35,7 @@ export const validateLoginByInputs = (inputs) => {
         if (e.message.includes("username") && !e.message.includes("password")) {
           throw new HttpError(500, "username is required")
         } else if (e.message.includes("username") && e.message.includes("password")) {
-          throw new HttpError(500, "username and password is required")
+          throw new HttpError(500, "username and password are required")
         } else if (e.message.includes("password")) {
           throw new HttpError(500, "password is required")
         }
