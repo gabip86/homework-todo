@@ -34,10 +34,9 @@ export class UserController {
 
   async register(req, res) {
     let { username, password } = req.body
-    const hashedPassword = await this.userService.hashPassword(password)
     try {
       validateRegisterByInputs({ username, password })
-      const result = await this.userService.addNewUser({ username, hashedPassword })
+      const result = await this.userService.addNewUser({ username, password })
       res.status(200).json(result)
     } catch (e) {
       res.status(500).json({ message: e.message })
@@ -52,9 +51,9 @@ export class UserController {
       const id = user.id
       if (await bcrypt.compare(password, user.password)) {
         const accessToken = jwt.sign({ username: username }, config.secret, { expiresIn: '1h' })
-        res.json({ username, id, accessToken })
+        res.status(200).json({ username, id, accessToken })
       } else {
-        res.json({ message: 'Password is incorrect' })
+        res.status(403).json({ message: 'Password is incorrect' })
       }
     } catch (e) {
       res.status(500).json({ message: e.message })

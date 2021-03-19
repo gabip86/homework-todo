@@ -45,7 +45,7 @@ const useForm = (initialValues, auth, setAuth) => {
         })
         .catch(err => {
           const { msg } = err.response.data
-          console.error(msg)
+          setError(msg)
         })
     }
   }

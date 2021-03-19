@@ -5,7 +5,6 @@ export class UserService {
     this.userRepo = userRepo
     this.hashPassword = this.hashPassword.bind(this)
     this.addNewUser = this.addNewUser.bind(this)
-    this.userExists = this.userExists.bind(this)
     this.getUserIdByUsername = this.getUserIdByUsername.bind(this)
     this.getDataForAuth = this.getDataForAuth.bind(this)
   }
@@ -18,8 +17,14 @@ export class UserService {
     return bcrypt.compare(password, inputHashedPassword);
   }
 
-  async addNewUser(inputs) {
-    return this.userRepo.addNewUser(inputs)
+  async addNewUser({ username, password }) {
+    const exists = await this.userRepo.userExists(username)
+    if (exists) {
+      throw Error('User is already taken.')
+    } else {
+      const hashedPassword = await this.hashPassword(password)
+      return this.userRepo.addNewUser({ username, hashedPassword })
+    }
   }
 
   async getUserByUsername(username) {
@@ -28,14 +33,6 @@ export class UserService {
     } catch (e) {
       throw Error('Cannot find this user.')
     }
-  }
-
-  async userExists(username) {
-    const exists = this.userRepo.userExists(username)
-    if (exists) {
-      throw Error('User is already taken.')
-    }
-    return exists
   }
 
   async getDataForAuth(username) {
