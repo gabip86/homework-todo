@@ -1,7 +1,3 @@
-import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
-import config from '../config.js'
-
 export class UserController {
   constructor(userService) {
     this.userService = userService

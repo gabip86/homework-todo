@@ -32,6 +32,9 @@ const MainTodo = ({ auth }) => {
         headers: {
           authorization: "Bearer " + auth.token
         }
+      }).then(({ data }) => {
+        const { text, isDone } = data
+        setTodos([...todos, { text, isDone }])
       })
     } catch (err) {
       console.error(err)

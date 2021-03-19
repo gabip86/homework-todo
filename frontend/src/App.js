@@ -31,7 +31,7 @@ function App() {
       })
         .catch(console.error)
     }
-  }, [auth])
+  }, [])
 
   const routes = (auth, setAuth) => {
     return [
