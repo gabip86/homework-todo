@@ -37,9 +37,9 @@ const useForm = (initialValues, auth, setAuth) => {
       })
         .then(response => {
           if (response.status === 200) {
-            const { username, accessToken } = response.data
+            const { username, id, accessToken } = response.data
             localStorage.setItem('accessToken', accessToken)
-            setAuth({ ...auth, user: { username }, token: accessToken })
+            setAuth({ ...auth, user: { username, id }, token: accessToken })
           }
           history.push('/todos')
         })
