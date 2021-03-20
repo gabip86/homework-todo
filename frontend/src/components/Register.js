@@ -3,16 +3,18 @@ import { Container, Form, Button, Row, Col, Alert } from 'react-bootstrap'
 import useForm from '../utils/hooks/useForm.js'
 
 function Register() {
-  const { inputs, handleInputChange, handleSubmit, error, validated } = useForm({
+  const { inputs, handleInputChange, handleSubmit, error, message, validated } = useForm({
     username: '',
     password: '',
-    error: ''
+    error: '',
+    message: ''
   })
 
   return (
     <Container className="w-75 mx-auto needs-validation">
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <h1>Register</h1>
+        {message ? <><Alert variant="success">{message}</Alert></> : <></>}
         <Form.Group as={Row} controlId="validationCustom01">
           <Form.Label column sm={2}>Username</Form.Label>
           <Col sm={10}>
