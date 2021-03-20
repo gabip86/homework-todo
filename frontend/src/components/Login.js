@@ -13,7 +13,7 @@ const Login = ({ auth, setAuth }) => {
   return (
     <Container className="w-75 mx-auto">
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
-        <h3>Login</h3>
+        <h1>Login</h1>
         <Form.Group as={Row} controlId="validationCustom01">
           <Form.Label column sm={2}>Username</Form.Label>
           <Col sm={10}>

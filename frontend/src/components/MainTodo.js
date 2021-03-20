@@ -22,7 +22,6 @@ const MainTodo = ({ auth }) => {
 
   const addTodo = text => {
     const isDone = false
-    console.log(auth.user)
     try {
       axios.post("http://localhost:3000/todos", {
         text,
