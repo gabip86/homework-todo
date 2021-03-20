@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Form, Button, Row, Col } from 'react-bootstrap'
+import { Container, Form, Button, Row, Col, Alert } from 'react-bootstrap'
 import useForm from '../utils/hooks/useFormLogin.js'
 
 const Login = ({ auth, setAuth }) => {
@@ -46,6 +46,7 @@ const Login = ({ auth, setAuth }) => {
             </Form.Control.Feedback>
           </Col>
         </Form.Group>
+        {error ? <><Alert variant="danger">{error}</Alert></> : <></>}
         <Button variant="info" type="submit">
           Login
         </Button>

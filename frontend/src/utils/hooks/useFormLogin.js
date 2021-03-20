@@ -5,7 +5,7 @@ import axios from 'axios'
 const useForm = (initialValues, auth, setAuth) => {
   const [inputs, setInputs] = useState(initialValues)
   const [validated, setValidated] = useState(false)
-  const [error, setError] = useState('')
+  const [error, setError] = useState(null)
   const history = useHistory()
 
   const handleSubmit = e => {
@@ -44,8 +44,8 @@ const useForm = (initialValues, auth, setAuth) => {
           history.push('/todos')
         })
         .catch(err => {
-          const { msg } = err.response.data
-          setError(msg)
+          const { message } = err.response.data
+          setError(message)
         })
     }
   }

@@ -35,12 +35,15 @@ export class UserService {
   async loginUser({ username, password }) {
     validateLoginByInputs({ username, password })
     const user = await this.getUserByUsername(username)
+    if (!user) {
+      throw Error('Cannot find this user')
+    }
     const id = user.id
     if (await bcrypt.compare(password, user.password)) {
       const accessToken = jwt.sign({ username: username }, config.secret, { expiresIn: '1h' })
       return { username, id, accessToken }
     } else {
-      return { message: 'Password is incorrect' }
+      throw Error('Password is incorrect' )
     }
   }
 
@@ -48,7 +51,7 @@ export class UserService {
     try {
       return this.userRepo.getUserByUsername(username)
     } catch (e) {
-      throw Error('Cannot find this user.')
+      return null
     }
   }
 
@@ -57,6 +60,10 @@ export class UserService {
   }
 
   async getUserIdByUsername(username) {
-    return this.userRepo.getUserIdByUsername(username)
+    try {
+      return this.userRepo.getUserIdByUsername(username)
+    } catch (e) {
+      return null
+    }
   }
 }

@@ -39,8 +39,8 @@ const useForm = (initialValues) => {
           history.push('/login')
         })
         .catch(err => {
-          const { msg } = err.response.data
-          console.error(msg)
+          const { message } = err.response.data
+          setError(message)
         })
     }
   }

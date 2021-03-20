@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Form, Button, Row, Col } from 'react-bootstrap'
+import { Container, Form, Button, Row, Col, Alert } from 'react-bootstrap'
 import useForm from '../utils/hooks/useForm.js'
 
 function Register() {
@@ -51,6 +51,7 @@ function Register() {
             </Form.Text>
           </Col>
         </Form.Group>
+        {error ? <><Alert variant="danger">{error}</Alert></> : <></>}
         <Button variant="info" type="submit">
           Register
         </Button>
