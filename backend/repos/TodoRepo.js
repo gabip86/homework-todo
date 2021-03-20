@@ -33,9 +33,26 @@ export class TodoRepo {
         }
         const savedTodo = {
           text: inputs.text,
-          isDone: inputs.isDone
+          isDone: inputs.isDone,
+          id: parseInt(results.insertId)
         }
         return resolve({ savedTodo })
+      })
+    })
+  }
+
+  async todoExists(id) {
+    const todo = await this.findTodoById(id)
+    return todo ? true : false
+  }
+
+  async findTodoById(id) {
+    return new Promise((resolve, reject) => {
+      this.db.query(`SELECT * FROM todos WHERE id = ?`, [id], (err, results) => {
+        if (err) {
+          return reject(err)
+        }
+        return resolve(results[0])
       })
     })
   }
@@ -46,7 +63,7 @@ export class TodoRepo {
         if (err) {
           return reject(err)
         }
-        return resolve({message: 'Todo has been updated to done.'})
+        return resolve({ message: 'Todo has been updated to done.', id: parseInt(id) })
       })
     })
   }
@@ -57,7 +74,7 @@ export class TodoRepo {
         if (err) {
           return reject(err)
         }
-        return resolve({ message: `Todo has been deleted.` })
+        return resolve({ message: `Todo has been deleted.`, id: parseInt(id) })
       })
     })
   }

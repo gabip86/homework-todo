@@ -22,7 +22,7 @@ const MainTodo = ({ auth }) => {
 
   const addTodo = text => {
     const isDone = false
-
+    console.log(auth.user)
     try {
       axios.post("http://localhost:3000/todos", {
         text,
@@ -33,8 +33,8 @@ const MainTodo = ({ auth }) => {
           authorization: "Bearer " + auth.token
         }
       }).then(({ data }) => {
-        const { text, isDone } = data
-        setTodos([...todos, { text, isDone }])
+        const { text, isDone, id } = data
+        setTodos([...todos, { text, isDone, id }])
       })
     } catch (err) {
       console.error(err)
@@ -42,11 +42,20 @@ const MainTodo = ({ auth }) => {
   }
 
   const markTodo = id => {
-    axios.put(`http://localhost:3000/todos/${id}`, {
-      headers: {
-        authorization: "Bearer " + auth.token
-      }
+    axios({
+      method: 'PUT',
+      url: `http://localhost:3000/todos/${id}`,
+      headers: { authorization: "Bearer " + auth.token }
     })
+      .then(({ data }) => {
+        setTodos(todos.map(todo => {
+          if (todo.id === data.id) {
+            return { ...todo, isDone: true }
+          } else {
+            return todo
+          }
+        }))
+      })
   }
 
   const removeTodo = id => {
@@ -54,6 +63,9 @@ const MainTodo = ({ auth }) => {
       headers: {
         authorization: "Bearer " + auth.token
       }
+    }).then(({ data }) => {
+      console.log(data)
+      setTodos(todos.filter(todo => todo.id !== data.id))
     })
   }
 
